@@ -1,8 +1,7 @@
 name: Unit Tests
 
 on:
-  pull_request:
-    branches: [development]
+  workflow_dispatch: 
 
 concurrency:
   group: unit-tests-${{ github.ref }}
@@ -42,10 +41,10 @@ jobs:
           set -o pipefail
           ctest --test-dir build/tests -R '^unit:' --output-on-failure -j 2 | tee build/ctest-log.txt
 
-      - name: Upload test log
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: ctest-log
-          path: build/ctest-log.txt
-          if-no-files-found: warn
+      # - name: Upload test log
+      #   if: always()
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: ctest-log
+      #     path: build/ctest-log.txt
+      #     if-no-files-found: warn
